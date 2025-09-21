@@ -1,7 +1,9 @@
+// script.js
 const resultElem = document.getElementById("result");
 const lastScanInput = document.getElementById("lastScan");
 const usedInput = document.getElementById("usedCount");
 
+// Replace with your Apps Script Web App URL
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx3j20MU__Ff98j8B79jRmS03H-KqXU0PZ5c6fIJXBZuxN2IoZf0VVDa7vxHoH5YlM_/exec";
 
 // === Normal scan check ===
@@ -12,7 +14,7 @@ function checkCoupon(id) {
       resultElem.innerText = txt;
     })
     .catch(err => {
-      resultElem.innerText = "⚠️ Error contacting server";
+      resultElem.innerText = "Error contacting server";
       console.error(err);
     });
 }
@@ -22,11 +24,11 @@ function updateUsage() {
   let id = lastScanInput.value.trim();
   let used = usedInput.value.trim();
   if (!id) {
-    resultElem.innerText = "⚠️ No QR scanned yet!";
+    resultElem.innerText = "No QR scanned yet.";
     return;
   }
   if (!used) {
-    resultElem.innerText = "⚠️ Enter how many used";
+    resultElem.innerText = "Enter a usage count.";
     return;
   }
 
@@ -36,24 +38,22 @@ function updateUsage() {
       resultElem.innerText = txt;
     })
     .catch(err => {
-      resultElem.innerText = "⚠️ Error contacting server";
+      resultElem.innerText = "Error contacting server";
       console.error(err);
     });
 }
 
 // === Scanner ===
-
 let scanningLocked = false;
 
 function onScanSuccess(decodedText) {
-    if (scanningLocked) return; // skip if still in cooldown
+  if (scanningLocked) return;
 
   scanningLocked = true;
   lastScanInput.value = decodedText;
   resultElem.innerText = "Scanned: " + decodedText + " (checking...)";
 
   checkCoupon(decodedText);
-  // allow next scan (even same QR) after 2s
   setTimeout(() => scanningLocked = false, 2000);
 }
 
