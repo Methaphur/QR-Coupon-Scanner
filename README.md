@@ -42,7 +42,7 @@ Volunteers scan coupons using a browser-based QR scanner. The scan is validated 
 
 ## 🚀 Installation & Setup
 ### 1. Backend (Google Apps Script)
-1. Create a new Google Sheet and name it **`Coupons`**.
+1. Create a new Google Sheet and name the sheet (not file) **`Coupons`**.
 2. Add the following columns to the sheet:  
     - **A:** Name  
     - **B:** Email  
